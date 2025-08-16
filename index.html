@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Connect</title>
-    <!-- Use Tailwind CSS for modern styling -->
+    <!-- Use Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -37,22 +35,19 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center space-x-4">
-                    <!-- College Logo -->
                     <img id="college-logo" src="Ajiet.jpg" alt="College Logo" class="h-10 w-10 md:h-12 md:w-12 rounded-full">
-                    <!-- College Name -->
                     <h1 id="college-name" class="text-xl md:text-2xl font-bold text-blue-600">A J Institute of Engineering and Technology - Campus Connect</h1>
                 </div>
                 <nav class="hidden md:flex space-x-8">
-                    <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition duration-150 ease-in-out">Events</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition duration-150 ease-in-out">Clubs</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition duration-150 ease-in-out">Workshops</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600 font-medium">Events</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600 font-medium">Clubs</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600 font-medium">Workshops</a>
                 </nav>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pb-16">
-        <!-- Main title and search bar -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
             <h2 class="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Upcoming Events & Workshops</h2>
             <div class="w-full md:w-1/3">
@@ -61,44 +56,51 @@
         </div>
 
         <!-- Events Container -->
-        <div id="events-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Event cards will be dynamically inserted here by JavaScript -->
-        </div>
+        <div id="events-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </main>
 
-    <!-- Modal for showing messages -->
+    <!-- Success/Error Modal -->
     <div id="message-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full mx-4">
             <h3 id="modal-title" class="text-lg font-bold mb-2"></h3>
             <p id="modal-text" class="text-gray-700 mb-4"></p>
-            <button id="modal-close-btn" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-150">Close</button>
+            <button id="modal-close-btn" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Close</button>
         </div>
     </div>
 
-    <!-- JavaScript for dynamic content and functionality -->
+    <!-- Registration Form Modal -->
+    <div id="register-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full mx-4">
+            <h3 class="text-lg font-bold mb-4">Register for Event</h3>
+            <form id="register-form" class="space-y-3">
+                <input type="text" id="reg-name" placeholder="Your Name" class="w-full border rounded p-2" required>
+                <input type="email" id="reg-email" placeholder="Your Email" class="w-full border rounded p-2" required>
+                <input type="text" id="reg-phone" placeholder="Your Phone" class="w-full border rounded p-2" required>
+                <input type="hidden" id="reg-event">
+                <div class="flex justify-between">
+                    <button type="button" id="register-cancel" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Use a function to manage the modal display
         function showModal(title, text) {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-text').textContent = text;
             document.getElementById('message-modal').classList.remove('hidden');
         }
 
-        // Event listener for the modal close button
         document.getElementById('modal-close-btn').addEventListener('click', () => {
             document.getElementById('message-modal').classList.add('hidden');
         });
 
-        // =========================================================================
-        // IMPORTANT: Customize your college name and logo here!
-        // =========================================================================
-        const collegeName = "A J Institute of Engineering and Technology"; // Replace with your college's name
-        const collegeLogoUrl = "Ajiet.jpg"; // Replace with your logo URL
-
+        const collegeName = "A J Institute of Engineering and Technology";
+        const collegeLogoUrl = "Ajiet.jpg";
         document.getElementById('college-name').textContent = `${collegeName} - Campus Connect`;
         document.getElementById('college-logo').src = collegeLogoUrl;
 
-        // Mock event data - In a real app, this would come from a database API.
         const events = [
             { id: 1, title: "Annual Tech Fest", description: "A day of coding, robotics, and innovation. Don't miss the hackathon!", date: "Oct 25, 2025", location: "Auditorium A", registered: false },
             { id: 2, title: "Startup Mixer", description: "Meet founders and investors from the local startup scene. Network and get inspired.", date: "Nov 5, 2025", location: "Student Center", registered: false },
@@ -108,13 +110,12 @@
             { id: 6, title: "Career Fair 2025", description: "Connect with top companies for internships and job opportunities. Bring your resume!", date: "Dec 3, 2025", location: "Gymnasium", registered: false },
         ];
 
-        // Function to render events
         function renderEvents(eventsToRender) {
             const eventsContainer = document.getElementById('events-container');
-            eventsContainer.innerHTML = ''; // Clear existing events
+            eventsContainer.innerHTML = '';
 
             if (eventsToRender.length === 0) {
-                eventsContainer.innerHTML = '<p class="text-center text-gray-500 col-span-full">No events found matching your search.</p>';
+                eventsContainer.innerHTML = '<p class="text-center text-gray-500 col-span-full">No events found.</p>';
                 return;
             }
 
@@ -128,47 +129,73 @@
                         <p class="text-sm text-gray-600 mb-4">📍 ${event.location}</p>
                         <p class="text-gray-700 mb-4">${event.description}</p>
                     </div>
-                    <button data-id="${event.id}" class="register-btn mt-4 w-full py-2 rounded-md font-medium transition duration-150 ${event.registered ? 'registered' : 'bg-blue-600 text-white hover:bg-blue-700'}">
+                    <button data-id="${event.id}" class="register-btn mt-4 w-full py-2 rounded-md font-medium ${event.registered ? 'registered' : 'bg-blue-600 text-white hover:bg-blue-700'}">
                         ${event.registered ? 'Registered' : 'Register'}
                     </button>
                 `;
                 eventsContainer.appendChild(eventCard);
             });
 
-            // Add event listeners to the new buttons
             document.querySelectorAll('.register-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const eventId = parseInt(e.target.dataset.id);
                     const eventIndex = events.findIndex(event => event.id === eventId);
-                    
                     if (eventIndex !== -1) {
-                        events[eventIndex].registered = !events[eventIndex].registered;
-                        
-                        if (events[eventIndex].registered) {
-                            showModal("Registration Successful!", `You are now registered for the "${events[eventIndex].title}" event.`);
-                        } else {
-                            showModal("Registration Canceled", `You have canceled your registration for "${events[eventIndex].title}".`);
-                        }
-                        
-                        // Re-render the events to update the button state
-                        renderEvents(events);
+                        document.getElementById("reg-event").value = events[eventIndex].title;
+                        document.getElementById("register-modal").classList.remove("hidden");
                     }
                 });
             });
         }
 
-        // Add event listener for the search bar
-        const searchInput = document.getElementById('event-search');
-        searchInput.addEventListener('input', (e) => {
+        document.getElementById("register-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("reg-name").value;
+            const email = document.getElementById("reg-email").value;
+            const phone = document.getElementById("reg-phone").value;
+            const eventTitle = document.getElementById("reg-event").value;
+
+            try {
+                const response = await fetch("http://localhost:5000/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email, phone, event: eventTitle })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showModal("Registration Successful!", `You are now registered for "${eventTitle}".`);
+                    const eventIndex = events.findIndex(ev => ev.title === eventTitle);
+                    if (eventIndex !== -1) {
+                        events[eventIndex].registered = true;
+                        renderEvents(events);
+                    }
+                } else {
+                    showModal("Error", result.error || "Something went wrong");
+                }
+            } catch (err) {
+                showModal("Error", "Could not connect to backend");
+            }
+
+            document.getElementById("register-modal").classList.add("hidden");
+            document.getElementById("register-form").reset();
+        });
+
+        document.getElementById("register-cancel").addEventListener("click", () => {
+            document.getElementById("register-modal").classList.add("hidden");
+        });
+
+        document.getElementById('event-search').addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const filteredEvents = events.filter(event => 
+            const filteredEvents = events.filter(event =>
                 event.title.toLowerCase().includes(searchTerm) ||
                 event.description.toLowerCase().includes(searchTerm)
             );
             renderEvents(filteredEvents);
         });
 
-        // Initial render of events
         window.onload = () => {
             renderEvents(events);
         };
